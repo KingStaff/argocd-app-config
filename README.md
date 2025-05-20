@@ -7,6 +7,9 @@
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+# access ArgoCD UI
+kubectl get svc -n argocd
+kubectl port-forward svc/argocd-server 8080:443 -n argocd
 
 ```
 
@@ -14,9 +17,9 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 #### Links
 
-- Config repo: [https://gitlab.com/nanuchi/argocd-app-config](https://gitlab.com/nanuchi/argocd-app-config)
+- Config repo: [https://github.com/KingStaff/argocd-app-config](https://github.com/KingStaff/argocd-app-config)
 
-- Docker repo: [https://hub.docker.com/repository/docker/nanajanashia/argocd-app](https://hub.docker.com/repository/docker/nanajanashia/argocd-app)
+- Docker repo: [https://hub.docker.com/repository/docker/staffengineering/argocd-app](https://hub.docker.com/repository/docker/staffengineering/argocd-app)
 
 - Install ArgoCD: [https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd](https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd)
 
