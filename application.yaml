@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp-argo-application
+  name: payroll-website-application
   namespace: argocd
 spec:
   project: default
@@ -9,10 +9,10 @@ spec:
   source:
     repoURL: https://github.com/KingStaff/argocd-app-config.git
     targetRevision: HEAD
-    path: dev
+    path: payroll 
   destination: 
     server: https://kubernetes.default.svc
-    namespace: myapp
+    namespace: default
 
   syncPolicy:
     syncOptions:
