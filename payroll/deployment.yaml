@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payroll_website
+  name: payroll-website
   labels:
-    app: payroll_website
+    app: payroll-website
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payroll_website
+      app: payroll-website
   template:
     metadata:
       labels:
-        app: payroll_website
+        app: payroll-website
     spec:
       containers:
-      - name: payroll_website
+      - name: payroll-website
         image: staffengineering/payroll_website:v1
         ports:
         - containerPort: 5170
