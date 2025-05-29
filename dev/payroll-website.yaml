@@ -5,7 +5,7 @@ metadata:
   labels:
     app: payroll-website
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: payroll-website
