@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payroll-management
+  labels:
+    app: payroll-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payroll-management
+  template:
+    metadata:
+      labels:
+        app: payroll-management
+    spec:
+      containers:
+      - name: payroll-management
+        image: staffengineering/payrollmanagement:latest
+        ports:
+        - containerPort: 32002
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payroll-management-service
+spec:
+  selector:
+    app: payroll-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 32002
+  type: ClusterIP
