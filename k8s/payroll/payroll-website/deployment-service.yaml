@@ -1,3 +1,4 @@
+# Deployment-payroll-website
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +7,7 @@ metadata:
   labels:
     app: payroll-website
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: payroll-website
@@ -19,7 +20,7 @@ spec:
       - name: payroll-website
         image: staffengineering/payroll_website:v1
         ports:
-        - containerPort: 80
+        - containerPort: 5170
         resources:
           requests:
             memory: "128Mi"
@@ -28,6 +29,7 @@ spec:
             memory: "256Mi"
             cpu: "200m"
 ---
+# Service-payroll-website
 apiVersion: v1
 kind: Service
 metadata:
@@ -39,25 +41,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 5170
   type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: payroll-website-ingress
-  namespace: default
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - host: payroll.local  # You can change this to your domain
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: payroll-website-service
-            port:
-              number: 80
