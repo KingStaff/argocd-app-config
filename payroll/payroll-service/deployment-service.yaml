@@ -1,0 +1,45 @@
+# Deployment - payroll-service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payroll-service
+  namespace: default
+  labels:
+    app: payroll-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payroll-service
+  template:
+    metadata:
+      labels:
+        app: payroll-service
+    spec:
+      containers:
+      - name: payroll-service
+        image: staffengineering/payrollservice:v1
+        ports:
+        - containerPort: 3001
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+# Service - payroll-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: payroll-service-service
+  namespace: default
+spec:
+  selector:
+    app: payroll-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3001
+  type: ClusterIP

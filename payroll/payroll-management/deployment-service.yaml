@@ -1,0 +1,45 @@
+# Deployment - payroll-management
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payroll-management
+  namespace: default
+  labels:
+    app: payroll-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payroll-management
+  template:
+    metadata:
+      labels:
+        app: payroll-management
+    spec:
+      containers:
+      - name: payroll-management
+        image: staffengineering/payrollmanagement:v1
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+# Service - payroll-management
+apiVersion: v1
+kind: Service
+metadata:
+  name: payroll-management-service
+  namespace: default
+spec:
+  selector:
+    app: payroll-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
