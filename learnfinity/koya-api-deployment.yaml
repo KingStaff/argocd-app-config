@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koya-api
+  labels:
+    app: koya-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: koya-api
+  template:
+    metadata:
+      labels:
+        app: koya-api
+    spec:
+      containers:
+      - name: koya-api
+        image: staffengineering/koya-api:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql+asyncpg://postgres:p%40ss123@postgres-service:5432/koya"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: koya-api-service
+spec:
+  selector:
+    app: koya-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: ClusterIP
