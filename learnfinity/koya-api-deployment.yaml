@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: koya-api
-        image: staffengineering/koya-api:v1
+        image: staffengineering/koya-api:v1.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
