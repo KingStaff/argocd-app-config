@@ -1,6 +1,5 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: koya-api
   labels:
@@ -16,21 +15,41 @@ spec:
         app: koya-api
     spec:
       containers:
-      - name: koya-api
-        image: staffengineering/koya-api:v1.1
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8000
-        env:
-        - name: DATABASE_URL
-          value: "postgresql+asyncpg://postgres:pass1234@postgres-service:5432/koya"
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        - name: koya-api
+          image: staffengineering/koya-api:v1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: koya-api-secrets
+                  key: DATABASE_URL
+            - name: KEYCLOAK_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: koya-api-secrets
+                  key: KEYCLOAK_CLIENT_SECRET
+            - name: KEYCLOAK_SERVER_URL
+              value: "http://161.97.73.139:8089"
+            - name: KEYCLOAK_REALM
+              value: "learnfinity-test"
+            - name: KEYCLOAK_CLIENT_ID
+              value: "learnfinity-api"
+            - name: KEYCLOAK_ENABLED
+              value: "true"
+            - name: AUTH_STRATEGY
+              value: "keycloak"
+            - name: ALLOW_INTERNAL_AUTH
+              value: "false"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
 
 ---
 apiVersion: v1
