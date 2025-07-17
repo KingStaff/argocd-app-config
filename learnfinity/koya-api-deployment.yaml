@@ -1,5 +1,6 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deploymentcode .
+
 metadata:
   name: koya-api
   labels:
@@ -22,7 +23,7 @@ spec:
         - containerPort: 8000
         env:
         - name: DATABASE_URL
-          value: "postgresql+asyncpg://postgres:p%40ss123@postgres-service:5432/koya"
+          value: "postgresql+asyncpg://postgres:pass1234@postgres-service:5432/koya"
         resources:
           requests:
             memory: "128Mi"
