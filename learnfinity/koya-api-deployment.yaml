@@ -31,6 +31,16 @@ spec:
                 secretKeyRef:
                   name: koya-api-secrets
                   key: KEYCLOAK_CLIENT_SECRET
+            - name: KEYCLOAK_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: koya-api-secrets
+                  key: KEYCLOAK_ADMIN_USERNAME
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: koya-api-secrets
+                  key: KEYCLOAK_ADMIN_PASSWORD
             - name: KEYCLOAK_SERVER_URL
               value: "http://161.97.73.139:8089"
             - name: KEYCLOAK_REALM
